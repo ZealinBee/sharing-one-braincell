@@ -11,7 +11,7 @@ body {
 
 .title {
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 h3 {
@@ -28,7 +28,7 @@ li {
 
 .winning-panel {
   display: none;
-  margin-top:1rem;
+  margin-top: 1rem;
 }
 
 .reset-game-button {
@@ -50,6 +50,10 @@ button {
   margin-top: 0.5rem;
 }
 
+.ready-button {
+  margin-top: 0.5rem;
+}
+
 button:hover {
   background-color: #ddd;
 }
@@ -60,5 +64,5 @@ input {
 }
 
 .word-input {
-    margin-top:1rem;
+  margin-top: 1rem;
 }

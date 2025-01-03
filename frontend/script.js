@@ -8,6 +8,7 @@ const resetGameButton = document.querySelector(".reset-game-button");
 const sameWordButton = document.querySelector(".same-word-button");
 const losingPanel = document.querySelector(".losing-panel");
 const wordsHistoryList = document.querySelector(".words-history");
+const wordForm = document.querySelector(".word-form");
 
 startGameButton.addEventListener("click", () => {
   if (playersList.children.length < 2) {
@@ -57,6 +58,7 @@ socket.on("join", (newPlayer, players) => {
 
 socket.on("startGame", (players) => {
   startGameButton.style.display = "none";
+  wordForm.style.display = "block";
   document.querySelector(".word-form").style.display = "block";
   updatePlayersListHandler(players);
 });
@@ -78,7 +80,7 @@ socket.on("compareWords", (players, doesWordsMatch) => {
 socket.on("win", (wordsHistory) => {
   winningPanel.style.display = "block";
   losingPanel.style.display = "none";
-  console.log(wordsHistory);
+  wordForm.style.display = "none";
   wordsHistoryList.innerHTML = wordsHistory
     .map((words, index) => {
       return `<li>Round ${index + 1}: ${words
