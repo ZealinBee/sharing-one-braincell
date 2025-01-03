@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>One Braincell</title>
+  </head>
+  <body>
+    <h2 class="title">One Braincell - Word Association Game</h2>
+    <div class="winning-panel">
+      <h2 class="winning-title">You WON!!!</h2>
+      <ul class="word-history"></ul>
+      <button class="reset-game-button">Reset Game</button>
+    </div>
+    <ul class="players"></ul>
+    <button class="start-game-button">Start Game</button>
+    <form class="word-form">
+      <input type="text" class="word-input" placeholder="your word" />
+      <button class="ready-button" type="submit">Ready</button>
+    </form>
+    <div class="losing-panel">
+      <h3>Press yes if it was actually just the same word</h3>
+      <button class="same-word-button">Yes</button>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
