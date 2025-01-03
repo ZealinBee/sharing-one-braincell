@@ -14,6 +14,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "pg": "^8.13.1",
+    "sharing-one-braincell": "file:",
     "socket.io": "^4.8.1",
     "word-list": "^4.1.0"
   }

@@ -15,6 +15,7 @@ app.get("/", (req, res) => {
 
 const players = [];
 let wordsArray = [];
+const wordsHistory = [];
 
 fs.readFile("words.txt", "utf8", (err, data) => {
   if (err) {
@@ -60,7 +61,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("win", () => {
-    io.emit("win");
+    io.emit("win", wordsHistory);
   });
 
   socket.on("resetGame", () => {
@@ -69,6 +70,7 @@ io.on("connection", (socket) => {
       player.ready = false;
       player.lastWord = "";
     });
+    wordsHistory.length = 0;
     io.emit("resetGame");
   });
 
@@ -77,11 +79,15 @@ io.on("connection", (socket) => {
     player.ready = true;
     player.word = word;
     io.emit("ready", players);
+
     if (players.every((player) => player.ready)) {
+      const wordsToAddToHistory = [];
       players.forEach((player) => {
         player.ready = false;
         player.lastWord = player.word;
+        wordsToAddToHistory.push(player.word);
       });
+      wordsHistory.push(wordsToAddToHistory);
       const doesWordsMatch = compareWords();
       io.emit("compareWords", players, doesWordsMatch);
     }

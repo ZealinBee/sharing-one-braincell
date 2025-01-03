@@ -28,6 +28,11 @@ li {
 
 .winning-panel {
   display: none;
+  margin-top:1rem;
+}
+
+.reset-game-button {
+  margin: 0.5rem 0;
 }
 
 .losing-panel {
@@ -43,10 +48,6 @@ button {
 
 .start-game-button {
   margin-top: 0.5rem;
-}
-
-.reset-game-button {
-    margin-bottom:1rem;
 }
 
 button:hover {
