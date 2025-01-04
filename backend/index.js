@@ -27,7 +27,9 @@ fs.readFile("words.txt", "utf8", (err, data) => {
 });
 
 const compareWords = () => {
-  const uniqueWords = new Set(players.map((player) => player.word));
+  const uniqueWords = new Set(
+    players.map((player) => player.word.toLowerCase())
+  );
   return uniqueWords.size === 1;
 };
 
