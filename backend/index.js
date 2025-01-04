@@ -53,10 +53,14 @@ io.on("connection", (socket) => {
   });
 
   socket.on("startGame", () => {
+    wordsHistory.length = 0;
+    const wordsToAddToHistory = [];
     players.forEach((player) => {
       const randomIndex = Math.floor(Math.random() * wordsArray.length);
       player.lastWord = wordsArray[randomIndex];
+      wordsToAddToHistory.push(player.lastWord);
     });
+    wordsHistory.push(wordsToAddToHistory);
     io.emit("startGame", players);
   });
 

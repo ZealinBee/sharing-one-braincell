@@ -83,9 +83,10 @@ socket.on("win", (wordsHistory) => {
   wordForm.style.display = "none";
   wordsHistoryList.innerHTML = wordsHistory
     .map((words, index) => {
-      return `<li>Round ${index + 1}: ${words
-        .map((word) => {
-          return `<b>${word} </b>`;
+      return `<li>Round ${index}: ${words
+        .map((word, wordIndex) => {
+          // don't show the last dash
+          return `<b>${word}${wordIndex < words.length - 1 ? " -" : ""}</b>`;
         })
         .join(" ")}</li>`;
     })

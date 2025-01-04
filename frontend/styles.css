@@ -7,15 +7,13 @@
 
 body {
   padding: 1rem;
+  background-image: url("https://images.pexels.com/photos/1323712/pexels-photo-1323712.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
 }
 
 .title {
   margin-top: 1rem;
   margin-bottom: 0.5rem;
-}
-
-h3 {
-  margin-top: 0.5rem;
+  font-weight: 900;
 }
 
 li {
@@ -39,15 +37,20 @@ li {
   display: none;
 }
 
+.losing-panel h3 {
+  margin-top: 0.5rem;
+}
+
 button {
-  padding: 10px;
+  padding: 0.5rem 1rem;
   border: none;
-  background-color: #f1f1f1;
+  background-color: #d4a600;
+  border-radius: 1rem;
   cursor: pointer;
 }
 
 .start-game-button {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 
 .ready-button {
@@ -55,14 +58,23 @@ button {
 }
 
 button:hover {
-  background-color: #ddd;
+  background-color: #ffcc00;
+}
+
+button:focus {
+  background-color: #d4a600;
 }
 
 input {
   padding: 0.5rem 1rem;
   border: 1px solid #ddd;
+  width: 200px;
 }
 
 .word-input {
   margin-top: 1rem;
+}
+
+.words-history li:last-child b {
+  color: #4aa04e;
 }
