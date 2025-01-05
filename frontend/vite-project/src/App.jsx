@@ -1,32 +1,53 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 
-import socket from "./socket";
 import "./styles/global.scss";
-import GamePage from "./pages/GamePage";
+import socket from "./socket";
+import RoomList from "./components/RoomList";
 
 function App() {
-  // const [isConnected, setIsConnected] = useState(false);
+  let navigate = useNavigate();
+  const [rooms, setRooms] = useState([]);
+  useEffect(() => {
+    const onRoomCreated = (roomId) => {
+      navigate(`/game/${roomId}`);
+    };
 
-  // useEffect(() => {
-  //   const onConnect = () => {
-  //     setIsConnected(true);
-  //   };
+    const onNewConnection = (rooms) => {
+      setRooms(rooms);
+    };
 
-  //   const onDisconnect = () => {
-  //     setIsConnected(false);
-  //   };
-  //   socket.on("connect", onConnect);
-  //   socket.on("disconnect", onDisconnect);
+    const onNewRoom = (rooms) => {
+      setRooms(rooms);
+    };
 
-  //   return () => {
-  //     socket.off("connect", onConnect);
-  //     socket.off("disconnect", onDisconnect);
-  //   };
-  // }, []);
+    socket.on("roomCreated", onRoomCreated);
+    socket.on("newConnection", onNewConnection);
+    socket.on("newRoom", onNewRoom);
 
-  return <>
-    <GamePage />
-  </>;
+    return () => {
+      socket.off("roomCreated", onRoomCreated);
+      socket.off("newConnection", onNewConnection);
+      socket.off("newRoom", onNewRoom);
+    };
+  }, []);
+
+  const createRoomHandler = () => {
+    socket.emit("createRoom");
+  };
+
+  return (
+    <>
+      <h2>Join a Room</h2>
+      <RoomList rooms={rooms} />
+      <div className="home-button-wrappers">
+        <button className="create-room-button" onClick={createRoomHandler}>
+          Create Room
+        </button>
+        {/* <button className="join-button">Join a Private Room by Code</button> */}
+      </div>
+    </>
+  );
 }
 
 export default App;
