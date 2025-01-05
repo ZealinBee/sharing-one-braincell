@@ -39,6 +39,9 @@ function App() {
   return (
     <>
       <h2>Join a Room</h2>
+      {
+        rooms.length === 0 && <p>No rooms available. Create one!</p>
+      }
       <RoomList rooms={rooms} />
       <div className="home-button-wrappers">
         <button className="create-room-button" onClick={createRoomHandler}>

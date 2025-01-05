@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import "../styles/components/room.scss";
 
 import socket from "../socket";
 
@@ -10,8 +11,9 @@ function Room({ room }) {
     navigate(`/game/${room.roomId}`);
   };
   return (
-    <li key={room.roomId}>
-      <p>{room.roomId}</p>
+    <li key={room.roomId} className="room-list-item">
+      <p>Room ID: {room.roomId}</p>
+      <p>{room.players.length}/4 Players</p>
       <button onClick={joinRoomHandler}>Join Room</button>
     </li>
   );
