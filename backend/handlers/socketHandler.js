@@ -1,10 +1,12 @@
-module.exports = (io, socket, players) => {
-  const disconnect = () => {
-    console.log(`user disconnected with id ${socket.id}`);
-    const leavingPlayer = players.find((player) => player.id === socket.id);
-    players.splice(players.indexOf(leavingPlayer), 1);
-    io.emit("leave", players);
-  };
+// module.exports = (io, socket, rooms) => {
+//   const disconnect = () => {
+//     console.log(`user disconnected with id ${socket.id}`);
+//     console.log(rooms);
+//     const room = rooms.find((room) => room.players.includes(socket.id));
+//     console.log(room);
 
-  socket.on("disconnect", disconnect);
-};
+//     if (!room) return;
+//   };
+
+//   socket.on("disconnect", disconnect);
+// };

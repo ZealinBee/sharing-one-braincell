@@ -17,11 +17,9 @@ const registerUserHandlers = require("./handlers/userHandler");
 const registerGameHandlers = require("./handlers/gameHandler");
 const registerSocketHandlers = require("./handlers/socketHandler");
 const registerRoomHandlers = require("./handlers/roomHandler");
+const RoomState = require("./modules/roomState");
 
-const players = [];
 let initialInGameWords = [];
-const wordsHistory = [];
-const rooms = [];
 
 app.use(express.static(path.join(__dirname, "../frontend")));
 
@@ -36,11 +34,12 @@ fs.readFile("words.txt", "utf8", (err, data) => {
 io.on("connection", (socket) => {
   console.log(`a user connected with id ${socket.id}`);
   // give the client the list of players upon connection
-  socket.emit("newConnection", rooms);
+  socket.emit("newConnection", RoomState.rooms);
+
   // registerUserHandlers(io, socket, players);
   registerGameHandlers(io, socket, initialInGameWords);
-  // registerSocketHandlers(io, socket, players);
-  registerRoomHandlers(io, socket, rooms);
+  // registerSocketHandlers(io, socket, rooms);
+  registerRoomHandlers(io, socket);
 });
 
 httpServer.listen(3000, () => {

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 import "../styles/pages/gamepage.scss";
 import socket from "../socket";
 
 function GamePage() {
+  let navigate = useNavigate();
   const location = useLocation();
   const roomId = location.pathname.split("/")[2];
   const [wordInput, setWordInput] = useState("");
@@ -51,31 +52,12 @@ function GamePage() {
     socket.on("ready", onReady);
     socket.on("gameWon", onGameWon);
     socket.on("nextRound", onNextRound);
-
-    // const onResetGame = () => {
-    //   setGameState("");
-    //   setWordInput("");
-    // }
-
-    // const onLeave = (players) => {
-    //   setPlayers(players);
-    // }
-
-    // socket.on("connect", onConnect);
-    // socket.on("join", onJoin);
-    // socket.on("startGame", onStartGame);
-    // socket.on("ready", onReady);
-    // socket.on("resetGame", onResetGame);
-    // socket.on("leave", onLeave);
-
     return () => {
       socket.off("onRoomUpdate", onRoomUpdate);
       socket.off("startGame", onStartGame);
       socket.off("ready", onReady);
       socket.off("gameWon", onGameWon);
       socket.off("nextRound", onNextRound);
-      // socket.off("resetGame", onResetGame);
-      // socket.off("leave", onLeave);
     };
   }, []);
 
@@ -101,8 +83,14 @@ function GamePage() {
     socket.emit("startGame");
   };
 
+  const leaveRoomHandler = () => {
+    socket.emit("leaveRoom", roomId, players);
+    navigate("/");
+  }
+
   return (
     <>
+      <button onClick={leaveRoomHandler}>Back To Lobby</button>
       <h2 className="title">Try to Guess the Same Word</h2>
       <ul className="players">
         {players.map((player) => (
