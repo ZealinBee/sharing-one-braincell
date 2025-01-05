@@ -1,10 +1,17 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const { Server } = require("socket.io");
+const cors = require("cors");
 
 const app = express();
 const httpServer = require("http").createServer(app);
-const io = require("socket.io")(httpServer);
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+  },
+});
 
 const registerUserHandlers = require("./handlers/userHandler");
 const registerGameHandlers = require("./handlers/gameHandler");

@@ -33,7 +33,7 @@ resetGameButton.addEventListener("click", () => {
 });
 
 sameWordButton.addEventListener("click", () => {
-  socket.emit("win");
+  socket.emit("gameWon");
 });
 
 const updatePlayersListHandler = (players) => {
@@ -47,9 +47,7 @@ const updatePlayersListHandler = (players) => {
 };
 
 socket.on("connect", () => {
-  socket.on("updatePlayersList", (playersList) => {
-    socket.emit("join", `player ${playersList.length + 1}`);
-  });
+  socket.emit("join");
 });
 
 socket.on("join", (newPlayer, players) => {
@@ -70,14 +68,14 @@ socket.on("ready", (players) => {
 socket.on("compareWords", (players, doesWordsMatch) => {
   updatePlayersListHandler(players);
   if (doesWordsMatch) {
-    socket.emit("win");
+    socket.emit("gameWon");
     return;
   }
   losingPanel.style.display = "block";
   wordInput.value = "";
 });
 
-socket.on("win", (wordsHistory) => {
+socket.on("gameWon", (wordsHistory) => {
   winningPanel.style.display = "block";
   losingPanel.style.display = "none";
   wordForm.style.display = "none";

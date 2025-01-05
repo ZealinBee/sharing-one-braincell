@@ -1,5 +1,6 @@
 module.exports = (io, socket, players) => {
-  const joinHandler = (playerName) => {
+  const joinHandler = () => {
+    let playerName = `Player ${players.length + 1}`;
     let newPlayer = {
       id: socket.id,
       name: playerName,
@@ -8,7 +9,7 @@ module.exports = (io, socket, players) => {
       lastWord: "",
     };
     players.push(newPlayer);
-    io.emit("join", newPlayer, players);
+    io.emit("join", players);
   };
 
   socket.on("join", joinHandler);
