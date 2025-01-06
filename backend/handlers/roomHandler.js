@@ -1,12 +1,13 @@
 const RoomState = require("../modules/roomState");
 
 const registerRoomHandlers = (io, socket) => {
-  const createRoomHandler = (creatorName) => {
+  const createRoomHandler = (creatorName, maxPlayers) => {
     // make unique later
     const roomId = Math.floor(1000 + Math.random() * 9000);
     RoomState.addRoom({
       roomId,
       gameState: "waiting",
+      maxPlayers,
       players: [
         {
           id: socket.id,
@@ -20,10 +21,10 @@ const registerRoomHandlers = (io, socket) => {
     socket.join(roomId);
     socket.emit("roomCreated", roomId);
     // inform all clients about the new room
-    io.emit("newRoom", RoomState.getAllRooms());
+    io.emit("roomsUpdate", RoomState.getAllRooms());
   };
 
-  const joinRoomHandler = (roomId) => {
+  const joinRoomHandler = (roomId, playerName) => {
     const room = RoomState.getRoom(Number(roomId));
     if (!room) {
       socket.emit("roomNotFound");
@@ -38,6 +39,7 @@ const registerRoomHandlers = (io, socket) => {
         ready: false,
         word: "",
         previousWord: "",
+        name: playerName,
       });
     }
     RoomState.updateRoom(room);

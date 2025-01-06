@@ -13,21 +13,15 @@ function App() {
       setRooms(rooms);
     };
 
-    const onNewRoom = (rooms) => {
-      setRooms(rooms);
-    };
-
     const onRoomsUpdate = (rooms) => {
       setRooms([...rooms]);
     };
 
     socket.on("newConnection", onNewConnection);
-    socket.on("newRoom", onNewRoom);
     socket.on("roomsUpdate", onRoomsUpdate);
 
     return () => {
       socket.off("newConnection", onNewConnection);
-      socket.off("newRoom", onNewRoom);
       socket.off("roomsUpdate", onRoomsUpdate);
     };
   }, []);

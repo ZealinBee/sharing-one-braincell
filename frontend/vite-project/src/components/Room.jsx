@@ -1,9 +1,17 @@
 import React from "react";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
+import socket from "../socket";
 import "../styles/components/room.scss";
 
 function Room({ room }) {
-  console.log(room);
+  let navigate = useNavigate();
+  const joinRoomHandler = () => {
+    let playerName = prompt("Enter your name for this room");
+    if (playerName === null) return;
+    console.log(playerName);
+    socket.emit("joinRoom", room.roomId, playerName);
+    navigate(`/game/${room.roomId}`);
+  };
   return (
     <li key={room.roomId} className="room-list-item">
       <h3>Room ID: {room.roomId}</h3>
@@ -22,9 +30,7 @@ function Room({ room }) {
         })}
       </div>
       {room.players.length < 4 && room.gameState === "waiting" ? (
-        <Link to={`/game/${room.roomId}`} className="join-room">
-          <button>Join Room</button>
-        </Link>
+        <button onClick={joinRoomHandler}>Join Room</button>
       ) : (
         <button className="disabled-button" disabled>
           Join Room

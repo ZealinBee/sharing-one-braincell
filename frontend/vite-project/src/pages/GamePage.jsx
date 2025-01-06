@@ -18,9 +18,9 @@ function GamePage() {
     gameState: "waiting", // playing, won, nextround, waiting
   });
 
-  useEffect(() => {
-    socket.emit("joinRoom", roomId);
-  }, [location]);
+  // useEffect(() => {
+  //   socket.emit("joinRoom", roomId);
+  // }, [location]);
 
   useEffect(() => {
     const onRoomUpdate = (players) => {
@@ -95,7 +95,7 @@ function GamePage() {
       <ul className="players">
         {players.map((player) => (
           <li key={player.id}>
-            <b>Name:</b> {player.id} {player.previousWord && <b>Previous Word:</b>}{" "}
+            <b>Name:</b> {player.name} {player.previousWord && <b>Previous Word:</b>}{" "}
             {player.previousWord} {player.ready && <b>READY</b>}
           </li>
         ))}

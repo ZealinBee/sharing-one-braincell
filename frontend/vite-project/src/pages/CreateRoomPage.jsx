@@ -10,6 +10,7 @@ function CreateRoomPage() {
   const [maxPlayers, setMaxPlayers] = useState(4);
   useEffect(() => {
     const onRoomCreated = (roomId) => {
+      socket.emit("joinRoom", roomId, playerName);
       navigate(`/game/${roomId}`);
     };
 
@@ -22,7 +23,11 @@ function CreateRoomPage() {
 
   const createRoomHandler = (e) => {
     e.preventDefault();
-    socket.emit("createRoom");
+    let creatorName = playerName;
+    if(playerName.trim() === "") {
+      creatorName = "Guest";
+    }
+    socket.emit("createRoom", creatorName, maxPlayers);
   };
   return (
     <div className="create-room-page">
@@ -37,6 +42,7 @@ function CreateRoomPage() {
           value={playerName}
           id="create-room-form--name"
           onChange={(e) => setPlayerName(e.target.value)}
+          placeholder="Guest"
         />
         <label htmlFor="max-players">Max Players</label>
         <select
