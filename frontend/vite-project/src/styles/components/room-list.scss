@@ -1,0 +1,9 @@
+.room-list {
+    display:grid;
+    gap:1rem;
+    margin-top:1rem;
+    grid-template-columns: 1fr;
+    @media(min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -1,8 +1,42 @@
 .room-list-item {
     display:flex;
-    align-items: center;
     margin-bottom:1rem;
+    background-color: #ccc;
+    border-radius: 0.5rem;
+    padding:1rem 1.5rem;
+    flex-direction: column;
+    h3 {
+        font-size:1.1rem;
+    }
     p {
         margin-right:0.5rem;
+        font-size:0.9rem;
+        color:#3b3b3b;
+    }
+
+    button {
+        margin-top: 0.5rem;
+        width:100%;
+        border-radius: 0.5rem;
+    }
+
+    .room-list-item-players {
+        display:flex;
+        margin-top:0.5rem;
+        .player {
+            margin-right:0.5rem;
+            width:30px;
+            img {
+                width:30px;
+            }
+        }
+    }
+}
+
+.disabled-button {
+    background-color: #ccc;
+    cursor: not-allowed;
+    &:hover {
+        background-color: #ccc;
     }
 }

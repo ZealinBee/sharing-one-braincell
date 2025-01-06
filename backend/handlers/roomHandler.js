@@ -1,17 +1,19 @@
 const RoomState = require("../modules/roomState");
 
 const registerRoomHandlers = (io, socket) => {
-  const createRoomHandler = () => {
+  const createRoomHandler = (creatorName) => {
     // make unique later
     const roomId = Math.floor(1000 + Math.random() * 9000);
     RoomState.addRoom({
       roomId,
+      gameState: "waiting",
       players: [
         {
           id: socket.id,
           ready: false,
           word: "",
           previousWord: "",
+          name: creatorName,
         },
       ],
     });

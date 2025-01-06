@@ -8,7 +8,7 @@ const app = express();
 const httpServer = require("http").createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
@@ -21,10 +21,12 @@ const RoomState = require("./modules/roomState");
 
 let initialInGameWords = [];
 
-app.use(express.static(path.join(__dirname, "../frontend")));
+app.use(express.static(path.join(__dirname, "../frontend/vite-project/dist/")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+  res.sendFile(
+    path.join(__dirname, "../frontend/vite-project/dist/index.html")
+  );
 });
 
 fs.readFile("words.txt", "utf8", (err, data) => {

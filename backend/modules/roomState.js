@@ -20,6 +20,11 @@ const RoomState = {
       return r;
     });
   },
+  updateRoomGameStateById(roomId, gameState) {
+    const room = this.getRoom(roomId);
+    room.gameState = gameState;
+    this.updateRoom(room);
+  },
 };
 
 module.exports = RoomState;

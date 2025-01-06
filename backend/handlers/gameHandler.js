@@ -1,5 +1,8 @@
-module.exports = (io, socket, initialInGameWords) => {
+const RoomState = require("../modules/roomState");
+
+const registerGameHandler = (io, socket, initialInGameWords) => {
   const startGame = (roomId, players) => {
+    RoomState.updateRoomGameStateById(Number(roomId), "playing");
     const wordsHistory = [];
     const game = {
       roomId,
@@ -71,3 +74,5 @@ module.exports = (io, socket, initialInGameWords) => {
   socket.on("resetGame", resetGame);
   socket.on("ready", ready);
 };
+
+module.exports = registerGameHandler;

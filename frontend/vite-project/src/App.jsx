@@ -4,10 +4,12 @@ import { useNavigate } from "react-router";
 import "./styles/global.scss";
 import socket from "./socket";
 import RoomList from "./components/RoomList";
+import CreateRoomForm from "./components/CreateRoomForm";
 
 function App() {
   let navigate = useNavigate();
   const [rooms, setRooms] = useState([]);
+  const [createRoomForm, setCreateRoomForm] = useState(false);
   useEffect(() => {
     const onRoomCreated = (roomId) => {
       navigate(`/game/${roomId}`);
@@ -41,7 +43,6 @@ function App() {
   const createRoomHandler = () => {
     socket.emit("createRoom");
   };
-
   return (
     <>
       <h2>Join a Room</h2>
@@ -55,6 +56,9 @@ function App() {
         </button>
         {/* <button className="join-button">Join a Private Room by Code</button> */}
       </div>
+      {
+        createRoomForm && <CreateRoomForm />
+      }
     </>
   );
 }
