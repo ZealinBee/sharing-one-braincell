@@ -3,10 +3,9 @@ const RoomState = require("../modules/roomState");
 const registerGameHandler = (io, socket, initialInGameWords) => {
   const startGame = (roomId, players) => {
     RoomState.updateRoomGameStateById(Number(roomId), "playing");
-    const wordsHistory = [];
     const game = {
       roomId,
-      wordsHistory,
+      wordsHistory: [],
       isGameStarted: true,
       gameState: "playing",
     };
@@ -21,16 +20,16 @@ const registerGameHandler = (io, socket, initialInGameWords) => {
 
     game.wordsHistory.push(wordsToPushToHistory);
     io.to(Number(roomId)).emit("startGame", game, players);
+    io.emit("roomsUpdate", RoomState.rooms);
   };
 
-  const resetGame = () => {
-    players.forEach((player) => {
-      player.word = "";
-      player.ready = false;
-      player.previousWord = "";
-    });
-    wordsHistory.length = 0;
-    io.emit("resetGame");
+  const resetGame = (game, players) => {
+    game.isGameStarted = false;
+    RoomState.updateRoomGameStateById(Number(game.roomId), "waiting");
+    game.wordsHistory.length = 0;
+    game.gameState = "waiting";
+    io.to(Number(game.roomId)).emit("resetGame", game, players);
+    io.emit("roomsUpdate", RoomState.rooms);
   };
 
   const ready = (word, game, players) => {
@@ -53,9 +52,7 @@ const registerGameHandler = (io, socket, initialInGameWords) => {
     const doesWordsMatch =
       new Set(players.map((player) => player.word.toLowerCase())).size === 1;
     if (doesWordsMatch) {
-      game.gameState = "won";
-      game.isGameStarted = false;
-      io.to(Number(game.roomId)).emit("gameWon", game, players);
+      gameWon(game);
     } else {
       game.gameState = "nextround";
       io.to(Number(game.roomId)).emit("nextRound", game, players);
@@ -63,10 +60,12 @@ const registerGameHandler = (io, socket, initialInGameWords) => {
   };
 
   const gameWon = (game) => {
-    console.log(game);
+    RoomState.updateRoomGameStateById(Number(game.roomId), "waiting");
     game.gameState = "won";
     game.isGameStarted = false;
     io.to(Number(game.roomId)).emit("gameWon", game);
+    console.log(RoomState.rooms);
+    io.emit("roomsUpdate", RoomState.rooms);
   };
 
   socket.on("startGame", startGame);

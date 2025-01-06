@@ -38,10 +38,15 @@ function GamePage() {
 
     const onGameWon = (game) => {
       setGame(game);
-      console.log(game);
     };
 
     const onNextRound = (game, players) => {
+      setGame(game);
+      setPlayers([...players]);
+      setWordInput("");
+    };
+
+    const onResetGame = (game, players) => {
       setGame(game);
       setPlayers([...players]);
       setWordInput("");
@@ -52,12 +57,15 @@ function GamePage() {
     socket.on("ready", onReady);
     socket.on("gameWon", onGameWon);
     socket.on("nextRound", onNextRound);
+    socket.on("resetGame", onResetGame);
+
     return () => {
-      socket.off("onRoomUpdate", onRoomUpdate);
+      socket.off("roomUpdate", onRoomUpdate);
       socket.off("startGame", onStartGame);
       socket.off("ready", onReady);
       socket.off("gameWon", onGameWon);
       socket.off("nextRound", onNextRound);
+      socket.off("resetGame", onResetGame);
     };
   }, []);
 
@@ -78,15 +86,15 @@ function GamePage() {
     socket.emit("ready", wordInput, game, players);
   };
 
-  const resetGameHandler = () => {
-    socket.emit("resetGame");
-    socket.emit("startGame");
+  const restartGameHandler = () => {
+    socket.emit("resetGame", game, players);
+    socket.emit("startGame", roomId, players);
   };
 
   const leaveRoomHandler = () => {
     socket.emit("leaveRoom", roomId, players);
     navigate("/");
-  }
+  };
 
   return (
     <>
@@ -95,8 +103,9 @@ function GamePage() {
       <ul className="players">
         {players.map((player) => (
           <li key={player.id}>
-            <b>Name:</b> {player.name} {player.previousWord && <b>Previous Word:</b>}{" "}
-            {player.previousWord} {player.ready && <b>READY</b>}
+            <b>Name:</b> {player.name}{" "}
+            {player.previousWord && <b>Previous Word:</b>} {player.previousWord}{" "}
+            {player.ready && <b>READY</b>}
           </li>
         ))}
       </ul>
@@ -114,13 +123,11 @@ function GamePage() {
           </button>
         </form>
       )}
-      {
-        game.gameState === "waiting" && (
-          <button className="start-button" onClick={startGameHandler}>
-            Start Game
-          </button>
-        )
-      }
+      {game.gameState === "waiting" && (
+        <button className="start-button" onClick={startGameHandler}>
+          Start Game
+        </button>
+      )}
       {game.gameState === "won" && (
         <div className="winning-panel">
           <h2 className="winning-title">
@@ -140,9 +147,7 @@ function GamePage() {
               </li>
             ))}
           </ul>
-          <button className="reset-game-button" onClick={resetGameHandler}>
-            Reset Game
-          </button>
+          <button onClick={restartGameHandler} className="new-game-button">New Game</button>
         </div>
       )}
       {game.gameState === "nextround" && (

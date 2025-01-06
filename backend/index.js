@@ -13,9 +13,7 @@ const io = new Server(httpServer, {
   },
 });
 
-const registerUserHandlers = require("./handlers/userHandler");
 const registerGameHandlers = require("./handlers/gameHandler");
-const registerSocketHandlers = require("./handlers/socketHandler");
 const registerRoomHandlers = require("./handlers/roomHandler");
 const RoomState = require("./modules/roomState");
 
@@ -38,9 +36,7 @@ io.on("connection", (socket) => {
   // give the client the list of players upon connection
   socket.emit("newConnection", RoomState.rooms);
 
-  // registerUserHandlers(io, socket, players);
   registerGameHandlers(io, socket, initialInGameWords);
-  // registerSocketHandlers(io, socket, rooms);
   registerRoomHandlers(io, socket);
 });
 
