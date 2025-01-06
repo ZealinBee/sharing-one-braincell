@@ -1,0 +1,41 @@
+.create-room-page {
+    h1 {
+        text-align: center;
+        font-size:1.5rem;
+        margin-top:2rem;
+    }
+}
+
+.create-room-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding:1rem;
+    border-radius: 1rem;
+    label {
+        font-size:0.85rem;
+        margin-bottom:0.25rem;
+    }
+
+    input {
+        width:100%;
+        margin-bottom:0.5rem;
+        background-color:#F2F2F2;
+        border-radius: 0.25rem;
+    }
+
+    select {
+        padding:0.5rem;
+        background-color: #F2F2F2;
+        border-radius: 0.25rem;
+        margin-bottom:1rem;
+        border:none;
+    }
+
+    button {
+        margin-top:1rem;
+        border-radius: 0.25rem;
+    }
+}

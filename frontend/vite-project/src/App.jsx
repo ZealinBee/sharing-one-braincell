@@ -1,20 +1,14 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 import "./styles/global.scss";
 import socket from "./socket";
 import RoomList from "./components/RoomList";
-import CreateRoomForm from "./components/CreateRoomForm";
+import { useRooms } from "./context/RoomContext";
 
 function App() {
-  let navigate = useNavigate();
-  const [rooms, setRooms] = useState([]);
-  const [createRoomForm, setCreateRoomForm] = useState(false);
+  const { rooms, setRooms } = useRooms();
   useEffect(() => {
-    const onRoomCreated = (roomId) => {
-      navigate(`/game/${roomId}`);
-    };
-
     const onNewConnection = (rooms) => {
       setRooms(rooms);
     };
@@ -25,40 +19,32 @@ function App() {
 
     const onRoomsUpdate = (rooms) => {
       setRooms([...rooms]);
-    }
+    };
 
-    socket.on("roomCreated", onRoomCreated);
     socket.on("newConnection", onNewConnection);
     socket.on("newRoom", onNewRoom);
     socket.on("roomsUpdate", onRoomsUpdate);
 
     return () => {
-      socket.off("roomCreated", onRoomCreated);
       socket.off("newConnection", onNewConnection);
       socket.off("newRoom", onNewRoom);
       socket.off("roomsUpdate", onRoomsUpdate);
     };
   }, []);
 
-  const createRoomHandler = () => {
-    socket.emit("createRoom");
-  };
   return (
     <>
       <h2>Join a Room</h2>
-      {
-        rooms.length === 0 && <p>No rooms available. Create one!</p>
-      }
+      {rooms.length === 0 && <p>No rooms available. Create one!</p>}
       <RoomList rooms={rooms} />
       <div className="home-button-wrappers">
-        <button className="create-room-button" onClick={createRoomHandler}>
-          Create Room
-        </button>
+        <Link to="create-room">
+          {" "}
+          <button>Create Room</button>
+        </Link>
+
         {/* <button className="join-button">Join a Private Room by Code</button> */}
       </div>
-      {
-        createRoomForm && <CreateRoomForm />
-      }
     </>
   );
 }
