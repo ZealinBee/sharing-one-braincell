@@ -13,7 +13,6 @@ const registerGameHandler = (io, socket, initialInGameWords) => {
     players.forEach((player) => {
       const randomIndex = Math.floor(Math.random() * initialInGameWords.length);
       player.previousWord = initialInGameWords[randomIndex];
-
       // Since it is a 2D array [[word1, word2], [word1, word2]], push word to history
       wordsToPushToHistory.push(player.previousWord);
     });
@@ -28,6 +27,11 @@ const registerGameHandler = (io, socket, initialInGameWords) => {
     RoomState.updateRoomGameStateById(Number(game.roomId), "waiting");
     game.wordsHistory.length = 0;
     game.gameState = "waiting";
+    players.forEach((player) => {
+      player.previousWord = "";
+      player.word = "";
+      player.ready = false;
+    });
     io.to(Number(game.roomId)).emit("resetGame", game, players);
     io.emit("roomsUpdate", RoomState.rooms);
   };

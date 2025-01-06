@@ -1,40 +1,13 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="icon"
-      href="https://cdn2.iconfinder.com/data/icons/human-body-1/100/Nerve-512.png"
-    />
-    <link rel="stylesheet" href="./styles.css" />
-    <title>One Braincell</title>
+    <title>Vite + React</title>
   </head>
   <body>
-    <h2 class="title">Try to Guess the Same Word</h2>
-    <ul class="players"></ul>
-    <button class="start-game-button">Start Game</button>
-    <form class="word-form">
-      <input type="text" class="word-input" placeholder="your word" />
-      <button class="ready-button" type="submit">Ready</button>
-    </form>
-    <div class="winning-panel">
-      <h2 class="winning-title">Congrats! Y'all Got One Braincell FRFR</h2>
-      <h3>Your attempts:</h3>
-      <ul class="words-history"></ul>
-      <button class="reset-game-button">Reset Game</button>
-    </div>
-    <div class="losing-panel">
-      <h3>Press yes if it was actually just the same word</h3>
-      <button class="same-word-button">Yes</button>
-    </div>
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="script.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

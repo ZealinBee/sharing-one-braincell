@@ -19,12 +19,10 @@ const RoomState = require("./modules/roomState");
 
 let initialInGameWords = [];
 
-app.use(express.static(path.join(__dirname, "../frontend/vite-project/dist/")));
+app.use(express.static(path.join(__dirname, "../frontend/dist/")));
 
 app.get("/", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "../frontend/vite-project/dist/index.html")
-  );
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 
 fs.readFile("words.txt", "utf8", (err, data) => {

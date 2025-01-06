@@ -47,8 +47,12 @@ function GamePage() {
     };
 
     const onResetGame = (game, players) => {
+      console.log("resetting game");
+      players.forEach((player) => {
+        console.log(player);
+      });;
       setGame(game);
-      setPlayers([...players]);
+      setPlayers(players.map((player) => ({ ...player })));
       setWordInput("");
     };
 
