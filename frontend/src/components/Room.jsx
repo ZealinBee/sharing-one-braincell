@@ -21,7 +21,7 @@ function Room({ room }) {
   };
   return (
     <li key={room.roomId} className="room-list-item">
-      <h3>Room ID: {room.roomId}</h3>
+      <h3>{room.players[0].name}'s Room</h3>
       {room.gameState === "playing" ? (
         <p>Game is in progress</p>
       ) : (

@@ -60,8 +60,6 @@ const registerRoomHandlers = (io, socket) => {
     } else {
       io.to(Number(roomId)).emit("roomUpdate", updatedPlayers);
     }
-    console.log("rooms");
-    console.log(RoomState.getAllRooms());
     io.emit("roomsUpdate", RoomState.getAllRooms());
   };
 

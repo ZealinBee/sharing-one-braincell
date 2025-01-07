@@ -25,6 +25,17 @@ const RoomState = {
     room.gameState = gameState;
     this.updateRoom(room);
   },
+  removePlayerFromRoom(roomId, playerId) {
+    const room = this.getRoom(roomId);
+    room.players = room.players.filter((player) => player.id !== playerId);
+    this.updateRoom(room);
+  },
+  removeRoomIfEmpty(roomId) {
+    const room = this.getRoom(roomId);
+    if (room.players.length === 0) {
+      this.removeRoom(roomId);
+    }
+  },
 };
 
 module.exports = RoomState;

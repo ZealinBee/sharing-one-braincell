@@ -15,6 +15,7 @@ const io = new Server(httpServer, {
 
 const registerGameHandlers = require("./handlers/gameHandler");
 const registerRoomHandlers = require("./handlers/roomHandler");
+const registerSocketHandler = require("./handlers/socketHandler");
 const RoomState = require("./modules/roomState");
 
 let initialInGameWords = [];
@@ -33,7 +34,7 @@ io.on("connection", (socket) => {
   console.log(`a user connected with id ${socket.id}`);
   // give the client the list of players upon connection
   socket.emit("newConnection", RoomState.rooms);
-
+  registerSocketHandler(io, socket);
   registerGameHandlers(io, socket, initialInGameWords);
   registerRoomHandlers(io, socket);
 });
