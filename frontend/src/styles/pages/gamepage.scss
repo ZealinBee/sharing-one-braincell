@@ -11,6 +11,12 @@
 
 .new-game-button {
   margin: 0.5rem 0;
+  margin-right:0.5rem;
+  background-color: #4aa04e;
+  color:white;
+  &:hover {
+    background-color: #65a568;
+  }
 }
 
 .losing-panel h3 {
@@ -19,6 +25,20 @@
 
 .start-button {
   margin-top: 1rem;
+  margin-right:0.5rem;
+  background-color: #4aa04e;
+  color:white;
+  &:hover {
+    background-color: #65a568;
+  }
+}
+
+.back-to-lobby-button {
+  background-color: #a04a4a;
+  color:white;
+  &:hover {
+    background-color: #a56868;
+  }
 }
 
 .ready-button {
@@ -28,8 +48,18 @@
 
 .word-input {
   margin-top: 1rem;
+  border-radius: 0.25rem;
 }
 
 .words-history li:last-child b {
   color: #4aa04e;
+}
+
+.same-word-button {
+  margin-top:1rem;
+  background-color: #4aa04e;
+  color:white;
+  &:hover {
+    background-color: #65a568;
+  }
 }

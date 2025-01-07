@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router";
 
 import "../styles/pages/gamepage.scss";
 import socket from "../socket";
+import Player from "../components/Player";
 
 function GamePage() {
   let navigate = useNavigate();
@@ -50,7 +51,7 @@ function GamePage() {
       console.log("resetting game");
       players.forEach((player) => {
         console.log(player);
-      });;
+      });
       setGame(game);
       setPlayers(players.map((player) => ({ ...player })));
       setWordInput("");
@@ -102,17 +103,26 @@ function GamePage() {
 
   return (
     <>
-      <button onClick={leaveRoomHandler}>Back To Lobby</button>
-      <h2 className="title">Try to Guess the Same Word</h2>
-      <ul className="players">
+      <h2 className="title">
+        {game.gameState === "waiting"
+          ? "Players:"
+          : "Try to Guess the Same Word"}
+      </h2>
+      <ul className="players-list">
         {players.map((player) => (
-          <li key={player.id}>
-            <b>Name:</b> {player.name}{" "}
-            {player.previousWord && <b>Previous Word:</b>} {player.previousWord}{" "}
-            {player.ready && <b>READY</b>}
-          </li>
+          <Player player={player} gameState={game.gameState}></Player>
         ))}
       </ul>
+      {game.gameState === "nextround" && (
+        <div className="losing-panel">
+          <button
+            className="same-word-button"
+            onClick={() => socket.emit("gameWon", game)}
+          >
+            It was actually the same word!
+          </button>
+        </div>
+      )}
       {game.isGameStarted && (
         <form className="word-form">
           <input
@@ -128,16 +138,23 @@ function GamePage() {
         </form>
       )}
       {game.gameState === "waiting" && (
-        <button className="start-button" onClick={startGameHandler}>
-          Start Game
-        </button>
+        <>
+          <button className="start-button" onClick={startGameHandler}>
+            Start Game
+          </button>
+
+          <button onClick={leaveRoomHandler} className="back-to-lobby-button">
+            Back To Lobby
+          </button>
+        </>
       )}
+
       {game.gameState === "won" && (
         <div className="winning-panel">
           <h2 className="winning-title">
             Congrats! Yall Got One Braincell FRFR
           </h2>
-          <h3>Your attempts:</h3>
+          <h3>Your attempt history:</h3>
           <ul className="words-history">
             {game.wordsHistory.map((words, index) => (
               <li key={index}>
@@ -151,17 +168,12 @@ function GamePage() {
               </li>
             ))}
           </ul>
-          <button onClick={restartGameHandler} className="new-game-button">New Game</button>
-        </div>
-      )}
-      {game.gameState === "nextround" && (
-        <div className="losing-panel">
-          <h3>Press yes if it was actually just the same word</h3>
-          <button
-            className="same-word-button"
-            onClick={() => socket.emit("gameWon", game)}
-          >
-            Yes
+          <button onClick={restartGameHandler} className="new-game-button">
+            New Game
+          </button>
+
+          <button onClick={leaveRoomHandler} className="back-to-lobby-button">
+            Back To Lobby
           </button>
         </div>
       )}

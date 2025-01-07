@@ -13,6 +13,8 @@ const registerGameHandler = (io, socket, initialInGameWords) => {
     players.forEach((player) => {
       const randomIndex = Math.floor(Math.random() * initialInGameWords.length);
       player.previousWord = initialInGameWords[randomIndex];
+      player.word = "";
+      player.ready = false;
       // Since it is a 2D array [[word1, word2], [word1, word2]], push word to history
       wordsToPushToHistory.push(player.previousWord);
     });

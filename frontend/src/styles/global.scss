@@ -20,7 +20,7 @@ button {
   padding: 0.5rem 1rem;
   border: none;
   background-color: #d4a600;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   cursor: pointer;
 }
 
@@ -28,9 +28,7 @@ button:hover {
   background-color: #ffcc00;
 }
 
-button:focus {
-  background-color: #d4a600;
-}
+
 
 input {
   padding: 0.5rem 1rem;
