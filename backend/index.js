@@ -2,7 +2,8 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const { Server } = require("socket.io");
-const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express();
 const httpServer = require("http").createServer(app);
@@ -26,9 +27,16 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 
-fs.readFile("words.txt", "utf8", (err, data) => {
-  initialInGameWords = data.split("\n").map((word) => word.trim());
-});
+if (process.env.PRODUCTION === "false") {
+  fs.readFile("words.txt", "utf8", (err, data) => {
+    initialInGameWords = data.split("\n").map((word) => word.trim());
+  });
+}
+if (process.env.PRODUCTION === "true") {
+  fs.readFile("production-words.txt", "utf8", (err, data) => {
+    initialInGameWords = data.split("\n").map((word) => word.trim());
+  });
+}
 
 io.on("connection", (socket) => {
   console.log(`a user connected with id ${socket.id}`);
