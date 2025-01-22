@@ -21,7 +21,7 @@ const RoomState = require("./modules/roomState");
 
 let initialInGameWords = [];
 
-app.use(express.static(path.join(__dirname, "../frontend/dist/")));
+app.use(express.static(path.join(__dirname, "./production_frontend/")));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./production_frontend/index.html"));
