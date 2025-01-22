@@ -1,0 +1,15 @@
+.tutorial {
+    width: 600px; /* Fixed width */
+    margin: 0 auto; /* Centers the slider */
+    position: relative; /* Keeps the positioning stable */
+
+    .slick-slider {
+      width: 100%;
+    }
+
+    .slick-slide img {
+      width: 100%;
+      height: auto; /* Maintains aspect ratio */
+      object-fit: cover; /* Ensures uniform image filling */
+    }
+  }

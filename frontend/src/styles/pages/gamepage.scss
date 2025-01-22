@@ -63,3 +63,22 @@
     background-color: #65a568;
   }
 }
+
+.title-wrapper {
+  display:flex;
+  align-items: center;
+}
+
+.question-icon {
+  margin-left:1rem;
+  margin-top:0.3rem;
+  background-color:#4aa04e;
+  font-size:1rem;
+  padding:0.4rem 0.62rem 0.4rem 0.6rem;
+  color:white;
+  border-radius: 100%;
+  cursor:pointer;
+  &:hover {
+    background-color: #65a568;
+  }
+}

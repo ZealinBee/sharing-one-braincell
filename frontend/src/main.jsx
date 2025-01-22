@@ -4,6 +4,9 @@ import App from "./App.jsx";
 import GamePage from "./pages/GamePage.jsx";
 import CreateRoomPage from "./pages/CreateRoomPage.jsx";
 import { RoomProvider } from "./context/RoomContext.jsx";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 
 createRoot(document.getElementById("root")).render(
   <RoomProvider>

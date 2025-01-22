@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/pages/gamepage.scss";
 import socket from "../socket";
 import Player from "../components/Player";
+import Tutorial from "../components/Tutorial";
 
 function GamePage() {
   let navigate = useNavigate();
@@ -11,6 +14,7 @@ function GamePage() {
   const roomId = location.pathname.split("/")[2];
   const [wordInput, setWordInput] = useState("");
   const [players, setPlayers] = useState([]);
+  const [showTutorial, setShowTutorial] = useState(false);
 
   const [game, setGame] = useState({
     roomId: "",
@@ -103,26 +107,28 @@ function GamePage() {
 
   return (
     <>
-      <h2 className="title">
-        {game.gameState === "waiting"
-          ? "Players:"
-          : "Try to Guess the Same Word"}
-      </h2>
+      {/* <Tutorial showTutorial={showTutorial} setShowTutorial={setShowTutorial} /> */}
+      <div className="title-wrapper">
+        {game.gameState === "waiting" ? (
+          <h2 className="title">Players:</h2>
+        ) : (
+          <>
+            <h2 className="title">Try to Guess the Same Word</h2>
+            {/* <FontAwesomeIcon
+              icon={faQuestion}
+              className="question-icon"
+              onClick={() => setShowTutorial(true)}
+            /> */}
+          </>
+        )}
+      </div>
+
       <ul className="players-list">
         {players.map((player) => (
           <Player player={player} gameState={game.gameState}></Player>
         ))}
       </ul>
-      {game.gameState === "nextround" && (
-        <div className="losing-panel">
-          <button
-            className="same-word-button"
-            onClick={() => socket.emit("gameWon", game)}
-          >
-            It was actually the same word!
-          </button>
-        </div>
-      )}
+
       {game.isGameStarted && (
         <form className="word-form">
           <input
@@ -148,7 +154,16 @@ function GamePage() {
           </button>
         </>
       )}
-
+      {game.gameState === "nextround" && (
+        <div className="losing-panel">
+          <button
+            className="same-word-button"
+            onClick={() => socket.emit("gameWon", game)}
+          >
+            It was actually the same word!
+          </button>
+        </div>
+      )}
       {game.gameState === "won" && (
         <div className="winning-panel">
           <h2 className="winning-title">
